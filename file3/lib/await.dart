@@ -8,7 +8,7 @@ Future<String> makeToast() async {
   int randomNumber = Random().nextInt(3);
   // 0,1,2
   print('toaster is ON');
-  // againMakeNotes();
+  againMakeNotes();
   print(randomNumber);
 
   if (randomNumber == 0) {
@@ -34,27 +34,16 @@ void hungury(String reason) {
   print(reason);
 }
 
-void doChores() {
+Future<void> doChores() async {
   makeNotes();
-  var toast = makeToast();
-  againMakeNotes();
-  toast.then((value) {
-    if (value == "success") {
-      hungury('i had my toast!!!');
+  try {
+    String makesToast = await makeToast();
+    if (makesToast == 'success') {
+      hungury('i had toast');
     } else {
-      hungury('a poor friend took my toast :-( ), i am hungery');
+      hungury('friend took it');
     }
-  });
-  toast.catchError((err) => hungury('light went, i am hungury'));
-  // againMakeNotes();
-}
-
-Future<void> doChores2() async {
-  makeNotes();
-  String makesToast = await makeToast();
-  if (makesToast == 'success') {
-    hungury('i had toast');
-  } else {
-    hungury('friend took it');
+  } catch (err) {
+    print('electrivty went');
   }
 }
